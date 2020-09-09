@@ -1,0 +1,47 @@
+
+.container {
+    --background: url();
+}
+
+image-cropper {
+    width: 90%;
+}
+
+.initial-icons {
+    position: absolute;
+    bottom: 80px;
+    font-size: 50px;
+    top: 30px;
+}
+
+.preview-span{
+    width: 90%;
+    height: 190px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-weight: bold;
+    color: var(--ion-color-dark-contrast);
+    cursor: pointer;
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    background: black;
+    opacity: 0.7;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+}
+
+
+.icon-buttons {
+    text-align: center;
+    display: block;
+    margin: auto;
+    font-size: 45px;
+    margin-bottom: 20px;
+}
+

@@ -1,3 +1,99 @@
+
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+
+  <ion-content class="container">
+    <div class="pt-2 ">
+      <div class="center">
+        <h4>{{redeSocialSelecionda}}</h4>
+      </div>
+      <form [formGroup]="form">
+        <input type="file" class="custom-file-input" id="validatedCustomFile" accept="image/*" required
+          (change)="inputChange($event)" #inputImg hidden formControlName="foto" />
+      </form>
+      <div *ngIf="loadingImg" class="center" style="margin: 10px auto; height: 300px; width: 300px">
+        Carregando ...
+      </div>
+    
+      <div *ngIf="!loadingImg" style="margin: 10px auto;" class="center image-cropper" >
+    
+        <image-cropper
+        *ngIf="imgEvent && !fotoConfirmada"
+        [imageChangedEvent]="imgEvent"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="imgWidth / imgHeight"
+        format="png"
+        (imageCropped)="imageCropped($event)"
+        ></image-cropper>
+    
+        <img *ngIf="fotoConfirmada" [src]="croppedImage" style="display: block"  />
+    
+        <div *ngIf="!imgEvent" class="preview-span center" (click)="inputImg.click()">
+          <ion-icon style="top: 30px" class="initial-icons" name="image-outline"></ion-icon>
+          Selecione a imagem
+        </div>
+        <div *ngIf="!imgEvent"  style="top: 250px;" class="preview-span center" (click)="abrirCamera()">
+          <ion-icon style="top: 30px" class="initial-icons" name="camera-outline"></ion-icon>
+          Tirar uma foto
+        </div>
+      </div>
+      <div class="center" *ngIf="imgEvent && !fotoConfirmada">
+        <div class="center" *ngIf="!btnsEscolhaRedeSocial">
+          <ion-button type="button" class="btn btn-primary mr-1" (click)="escolherRedeSocial('Facebook')">
+            Facebook
+          </ion-button>
+          <ion-button type="button" class="btn btn-primary mr-1" (click)="escolherRedeSocial('Instagram')">
+            Instagram
+          </ion-button>
+          <ion-button type="button" class="btn btn-primary mr-1" (click)="escolherRedeSocial('Twitter')">
+            Twitter
+          </ion-button>
+        </div>
+
+        <div class="center" *ngIf="btnsEscolhaRedeSocial">
+          <ion-button type="button" class="btn btn-primary mr-1" (click)="escolherTipo('perfil')">
+            Perfil
+          </ion-button>
+    
+          <ion-button type="button" class="btn btn-primary mr-1" (click)="escolherTipo('feed')">
+            Feed
+          </ion-button>
+          <ion-button type="button" class="btn btn-primary mr-1" *ngIf="storiesBtn" (click)="escolherTipo('stories')">
+            Stories
+          </ion-button>
+          <ion-button type="button" class="btn btn-primary mr-1" (click)="escolherTipo('capa')"
+          *ngIf="redeSocialSelecionda !== 'Instagram'">
+            Capa
+          </ion-button>
+        </div>
+
+      </div>
+      <div *ngIf="showFeed"  class="feed-option center">
+        <ion-button type="button" *ngIf="redeSocialSelecionda !== 'Twitter'" (click)="escolherTipo('feedRetrato')" color="light">
+          Retrato
+        </ion-button>
+        <ion-button type="button" (click)="escolherTipo('feedPaisagem')" color="light">
+          Paisagem
+        </ion-button>
+        <ion-button type="button" (click)="escolherTipo('feedQuadrado')" color="light">
+          Quadrado
+        </ion-button>
+      </div>
+      <div class="center" *ngIf="fotoConfirmada">
+        <ion-button type="button" class="btn btn-primary mr-1" (click)="fotoConfirmada = false">
+          Voltar
+        </ion-button>
+        <ion-button  type="button" class="btn btn-primary mr-1" (click)="voltarInicio()">
+          Escolher nova foto
+        </ion-button>
+      </div>
+      <ion-row>
+        <ion-col *ngIf="!btnsEscolhaRedeSocial && imgEvent" size=12> <ion-icon (click)="voltarInicio()" class="icon-buttons" name="arrow-back-circle-outline"></ion-icon> </ion-col>
+        <ion-col *ngIf="btnsEscolhaRedeSocial" size=6> <ion-icon (click)="voltarOpcoes()" class="icon-buttons" name="arrow-back-circle-outline"></ion-icon></ion-col>
+        <ion-col *ngIf="btnsEscolhaRedeSocial" size=6>  <ion-icon (click)="postar()"  class="icon-buttons" name="checkmark-circle-outline"></ion-icon></ion-col>
+      </ion-row>
+      
+      
+     
+    </div>
+  </ion-content>
 </ion-app>
